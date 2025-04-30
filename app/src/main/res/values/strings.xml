@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">right</string>
+    <string name="less">bye</string>
+    <string name="more">Hi</string>
+    <string name="title_activity_login_page">LoginPage</string>
+    <string name="title_activity_join_id_pw">JoinIdPw</string>
+</resources>
