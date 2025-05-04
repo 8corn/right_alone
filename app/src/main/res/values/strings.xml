@@ -4,4 +4,9 @@
     <string name="more">Hi</string>
     <string name="title_activity_login_page">LoginPage</string>
     <string name="title_activity_join_id_pw">JoinIdPw</string>
+    <string name="title_activity_create_aka">CreateAka</string>
+    <string name="title_activity_choice_birth">ChoiceBirth</string>
+    <string name="title_activity_check_hobby">CheckHobby</string>
+    <string name="title_activity_introduce">Introduce</string>
+    <string name="title_activity_my_body">MyBody</string>
 </resources>
