@@ -40,7 +40,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.right.R
-import kotlin.math.sin
 
 class LoginPage : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -92,7 +91,7 @@ fun LoginPageScreen() {
             TextField(
                 value = id,
                 onValueChange = setId,
-                label = {
+                placeholder = {
                     Text(
                         text = "아이디를 입력해주세요.",
                         fontSize = 16.sp,
@@ -117,7 +116,7 @@ fun LoginPageScreen() {
             TextField(
                 value = pw,
                 onValueChange = setPw,
-                label = {
+                placeholder = {
                     Text(
                         text = "비밀번호를 입력해주세요.",
                         color = Color(0xFFA2A2A2),

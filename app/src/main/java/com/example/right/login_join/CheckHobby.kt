@@ -29,9 +29,9 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -43,6 +43,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.right.R
+import com.example.right.widget.AnimatedProgressBar
 import kotlinx.coroutines.delay
 
 class CheckHobby : ComponentActivity() {
@@ -59,10 +60,13 @@ class CheckHobby : ComponentActivity() {
 @Composable
 fun CheckHobbyScreen() {
     val content = LocalContext.current
+    val activity = content as? ComponentActivity
+
     val allHobbies = listOf(
         "📚 독서", "🐶 강아지", "✈️ 여행", "📸 사진 촬영", "🏃 러닝", "🎨 그림 그리기",
-        "🐱 고양이", "💪 운동하기", "📘 공부", "☕ 카페 가기", "🎧 음악 듣기",
-        "🧥 패션", "🎭 뮤지컬 관람", "🎹 악기 연주"
+        "🐈 고양이", "💪 운동하기", "🛌 집콕", "☕️ 카페 가기", "🎧 음악 듣기",
+        "🧤 패션", "🧙 뮤지컬 관람", "🎹 악기 연주", "📺 드라마", "🎮 게임", "🥘 요리", "🎥 영화", "🎪 전시회",
+        "⚽ 스포츠", "💵 재태크", "🛒 쇼핑하기", "💭 애니메이션", "📖 공부", "🥳 파티, 모임", "🥃 술"
     )
     var selectedHobbies by remember { mutableStateOf(listOf<String>()) }
     var showSnackbar by remember { mutableStateOf(false) }
@@ -75,12 +79,11 @@ fun CheckHobbyScreen() {
     }
 
     Surface(
-        color = Color.White
+        color = Color.White,
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(bottom = 36.dp)
         ) {
             Image(
                 painter = painterResource(R.drawable.back_arrow),
@@ -88,6 +91,9 @@ fun CheckHobbyScreen() {
                 modifier = Modifier
                     .padding(start = 10.dp, top = 57.dp)
                     .size(size = 26.dp)
+                    .clickable {
+                        activity?.onBackPressedDispatcher?.onBackPressed()
+                    }
             )
             HorizontalDivider(
                 modifier = Modifier
@@ -96,12 +102,9 @@ fun CheckHobbyScreen() {
                 color = Color(0x4DCDCDCD),
                 thickness = 1.dp,
             )
-            HorizontalDivider(
-                modifier = Modifier
-                    .padding(vertical = 10.dp, horizontal = 16.dp),
-                color = Color(0x4DCDCDCD),
-                thickness = 5.dp,
-            )
+
+            AnimatedProgressBar(9)
+
             Text(
                 text = "관심사",
                 modifier = Modifier
@@ -133,14 +136,20 @@ fun CheckHobbyScreen() {
                     }
                 }
             )
+        }
 
+        if (selectedHobbies.isEmpty() && !showSnackbar) {
+            showSnackbar = true
+        }
+
+        Column (
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(bottom = 36.dp)
+        ) {
             Spacer(modifier = Modifier.weight(1f))
-
-            if (selectedHobbies.isEmpty() && !showSnackbar) {
-                showSnackbar = true
-            }
-
-            Box (
+            
+            Box(
                 modifier = Modifier
                     .height(71.dp)
                     .fillMaxWidth(),
@@ -203,7 +212,9 @@ fun CheckHobbyScreen() {
                     .padding(horizontal = 20.dp),
                 shape = RoundedCornerShape(30.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (selectedHobbies.isNotEmpty()) Color(0xFFFF717C) else Color(0xFFE8E8E8),
+                    containerColor = if (selectedHobbies.isNotEmpty()) Color(0xFFFF717C) else Color(
+                        0xFFE8E8E8
+                    ),
                     contentColor = Color.White,
                 ),
             ) {
@@ -227,12 +238,12 @@ fun HobbyChip(
     onClick: () -> Unit
 ) {
     Surface (
-        shape = RoundedCornerShape(16.dp),
+        shape = RoundedCornerShape(30.dp),
         border = BorderStroke(1.dp, if (selected) Color(0xFFFF717C) else Color(0xFFCDCDCD)),
         color = if (selected) Color(0x33FF717C) else Color.White,
         onClick = onClick,
         modifier = Modifier
-            .padding(horizontal = 5.dp)
+            .padding(horizontal = 4.dp)
     ) {
         Row (
             modifier = Modifier

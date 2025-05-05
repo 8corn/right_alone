@@ -9,4 +9,8 @@
     <string name="title_activity_check_hobby">CheckHobby</string>
     <string name="title_activity_introduce">Introduce</string>
     <string name="title_activity_my_body">MyBody</string>
+    <string name="title_activity_my_height">MyHeight</string>
+    <string name="title_activity_my_home">MyHome</string>
+    <string name="title_activity_my_job">MyJob</string>
+    <string name="title_activity_self_auth">SelfAuth</string>
 </resources>

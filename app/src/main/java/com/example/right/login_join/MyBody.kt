@@ -7,16 +7,14 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -24,10 +22,8 @@ import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,6 +35,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.right.R
+import com.example.right.widget.AnimatedProgressBar
 
 class MyBody : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -54,8 +51,8 @@ class MyBody : ComponentActivity() {
 @Composable
 fun MyBodyScreen() {
     val content = LocalContext.current
+    val activity = content as? ComponentActivity
 
-    val selectedBody by remember { mutableStateOf(listOf<String>()) }
     val selectBody = remember { mutableStateOf<String?>(null) }
 
     Surface (
@@ -72,6 +69,9 @@ fun MyBodyScreen() {
                 modifier = Modifier
                     .padding(start = 10.dp, top = 57.dp)
                     .size(size = 26.dp)
+                    .clickable {
+                        activity?.onBackPressedDispatcher?.onBackPressed()
+                    }
             )
             HorizontalDivider(
                 modifier = Modifier
@@ -80,12 +80,9 @@ fun MyBodyScreen() {
                 color = Color(0x4DCDCDCD),
                 thickness = 1.dp,
             )
-            HorizontalDivider(
-                modifier = Modifier
-                    .padding(vertical = 10.dp, horizontal = 16.dp),
-                color = Color(0x4DCDCDCD),
-                thickness = 5.dp,
-            )
+
+            AnimatedProgressBar(7)
+            
             Text(
                 text = "어떤 체형에 가까우신가요?",
                 modifier = Modifier
@@ -105,13 +102,12 @@ fun MyBodyScreen() {
                 color = Color.Black,
             )
 
-            Spacer(modifier = Modifier.height(32.dp))
+            Spacer(modifier = Modifier.height(44.dp))
 
-            Row(
+            Column (
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .height(245.dp)
                     .padding(horizontal = 16.dp),
-                horizontalArrangement = Arrangement.Center
             ) {
                 SelectedBodyBtn(
                     onClick = {selectBody.value = "마름"},
@@ -121,7 +117,7 @@ fun MyBodyScreen() {
                     isSelected = selectBody.value == "마름"
                 )
 
-                Spacer(modifier = Modifier.width(12.dp))
+                Spacer(modifier = Modifier.height(7.dp))
 
                 SelectedBodyBtn(
                     onClick = {selectBody.value = "보통"},
@@ -131,93 +127,42 @@ fun MyBodyScreen() {
                     isSelected = selectBody.value == "보통"
                 )
 
-                Spacer(modifier = Modifier.width(12.dp))
+                Spacer(modifier = Modifier.height(7.dp))
 
                 SelectedBodyBtn(
-                    onClick = {selectBody.value = "글램"},
-                    text = "글램",
+                    onClick = {selectBody.value = "통통"},
+                    text = "통통",
                     modifier = Modifier
                         .weight(1f),
-                    isSelected = selectBody.value == "글램"
+                    isSelected = selectBody.value == "통통"
+                )
+
+                Spacer(modifier = Modifier.height(7.dp))
+
+                SelectedBodyBtn(
+                    onClick = {selectBody.value = "머슬"},
+                    text = "머슬",
+                    modifier = Modifier
+                        .weight(1f),
+                    isSelected = selectBody.value == "머슬"
                 )
             }
-
-            Spacer(modifier = Modifier.height(57.dp))
-
-            Text(
-                text = "Tip.\n키-몸무게로 계산했을 때",
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .align(Alignment.Start),
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Light,
-                color = Color(0xFFA2A2A2),
-            )
-
-            Row (
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 16.dp)
-            ) {
-                Text(
-                    text = "000이상 - 마름",
-                    modifier = Modifier
-                        .padding(vertical = 7.dp)
-                        .weight(1f),
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color(0xFFA2A2A2),
-                    textAlign = TextAlign.Start
-                )
-
-                Text(
-                    text = "000 ~ 000 - 보통",
-                    modifier = Modifier
-                        .padding(vertical = 7.dp)
-                        .weight(1f),
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color(0xFFA2A2A2),
-                    textAlign = TextAlign.Start
-                )
-
-                Text(
-                    text = "000이하 - 글램",
-                    modifier = Modifier
-                        .padding(vertical = 7.dp)
-                        .weight(1f),
-                    fontSize = 14.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color(0xFFA2A2A2),
-                    textAlign = TextAlign.Start
-                )
-            }
-
-            Text(
-                text = "으로 계산하면 편리해요.",
-                modifier = Modifier
-                    .padding(horizontal = 16.dp)
-                    .align(Alignment.Start),
-                fontSize = 14.sp,
-                fontWeight = FontWeight.Light,
-                color = Color(0xFFA2A2A2),
-            )
 
             Spacer(modifier = Modifier.weight(1f))
 
             Button(
                 onClick = {
-                    val intent = Intent(content, Introduce::class.java)
+                    val intent = Intent(content, MyJob::class.java)
                     content.startActivity(intent)
                 },
-                enabled = selectedBody.isNotEmpty(),
+                enabled = selectBody.value != null,
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(60.dp)
                     .padding(horizontal = 20.dp),
                 shape = RoundedCornerShape(30.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (selectedBody.isNotEmpty()) Color(0xFFFF717C) else Color(0xFFE8E8E8),
+                    containerColor = if (selectBody.value != null) Color(0xFFFF717C) else Color(0xFFE8E8E8),
                     contentColor = Color.White,
                 ),
             ) {
@@ -244,7 +189,7 @@ fun SelectedBodyBtn(
     Button(
         onClick = onClick,
         modifier = modifier
-            .height(100.dp)
+            .fillMaxWidth()
             .border(
                 1.dp,
                 if (isSelected) Color(0xFFFF717C) else Color(0xFFCDCDCD),

@@ -11,6 +11,26 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Right">
         <activity
+            android:name=".login_join.SelfAuth"
+            android:exported="false"
+            android:label="@string/title_activity_self_auth"
+            android:theme="@style/Theme.Right" />
+        <activity
+            android:name=".login_join.MyJob"
+            android:exported="false"
+            android:label="@string/title_activity_my_job"
+            android:theme="@style/Theme.Right" />
+        <activity
+            android:name=".login_join.MyHome"
+            android:exported="false"
+            android:label="@string/title_activity_my_home"
+            android:theme="@style/Theme.Right" />
+        <activity
+            android:name=".login_join.MyHeight"
+            android:exported="false"
+            android:label="@string/title_activity_my_height"
+            android:theme="@style/Theme.Right" />
+        <activity
             android:name=".login_join.MyBody"
             android:exported="false"
             android:label="@string/title_activity_my_body"

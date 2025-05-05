@@ -42,6 +42,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.right.R
+import com.example.right.widget.AnimatedProgressBar
 
 class CreateAka : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +58,8 @@ class CreateAka : ComponentActivity() {
 @Composable
 fun CreateAkaScreen() {
     val content = LocalContext.current
+    val activity = content as? ComponentActivity
+
     val (aka, setAka) = remember { mutableStateOf("") }
     val isAkaValid = aka.isNotBlank()
     val akaInteractionSource = remember { MutableInteractionSource() }
@@ -80,6 +83,9 @@ fun CreateAkaScreen() {
                 modifier = Modifier
                     .padding(start = 10.dp, top = 57.dp)
                     .size(size = 26.dp)
+                    .clickable {
+                        activity?.onBackPressedDispatcher?.onBackPressed()
+                    }
             )
             HorizontalDivider(
                 modifier = Modifier
@@ -88,12 +94,9 @@ fun CreateAkaScreen() {
                 color = Color(0x4DCDCDCD),
                 thickness = 1.dp,
             )
-            HorizontalDivider(
-                modifier = Modifier
-                    .padding(vertical = 10.dp, horizontal = 16.dp),
-                color = Color(0x4DCDCDCD),
-                thickness = 5.dp,
-            )
+
+            AnimatedProgressBar(3)
+
             Text(
                 text = "어떻게 불러드릴까요?",
                 modifier = Modifier
@@ -170,7 +173,7 @@ fun CreateAkaScreen() {
                 Text(
                     text = "${aka.length} / 10자",
                     fontSize = 14.sp,
-                    color = Color(0xFFA2A2A2),
+                    color = if (aka.length > 10) Color(0xFFFF717C) else Color(0xFFA2A2A2),
                 )
             }
 

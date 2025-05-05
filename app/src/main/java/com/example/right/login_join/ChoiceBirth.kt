@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Column
@@ -47,6 +48,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.right.R
+import com.example.right.widget.AnimatedProgressBar
 
 class ChoiceBirth : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -62,6 +64,7 @@ class ChoiceBirth : ComponentActivity() {
 @Composable
 fun ChoiceBirthScreen() {
     val content = LocalContext.current
+    val activity = content as? ComponentActivity
 
     val (name, setName) = remember { mutableStateOf("") }
     val (year, setYear) = remember { mutableStateOf("") }
@@ -100,7 +103,11 @@ fun ChoiceBirthScreen() {
                 modifier = Modifier
                     .padding(start = 10.dp, top = 57.dp)
                     .size(size = 26.dp)
+                    .clickable {
+                        activity?.onBackPressedDispatcher?.onBackPressed()
+                    }
             )
+
             HorizontalDivider(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -108,14 +115,11 @@ fun ChoiceBirthScreen() {
                 color = Color(0x4DCDCDCD),
                 thickness = 1.dp,
             )
-            HorizontalDivider(
-                modifier = Modifier
-                    .padding(vertical = 10.dp, horizontal = 16.dp),
-                color = Color(0x4DCDCDCD),
-                thickness = 5.dp,
-            )
+
+            AnimatedProgressBar(4)
+
             Text(
-                text = "반가워요!",
+                text = "아래 정보를 입력해주세요.",
                 modifier = Modifier
                     .padding(start = 16.dp, top = 30.dp)
                     .align(Alignment.Start),
@@ -343,7 +347,7 @@ fun ChoiceBirthScreen() {
 
             Button(
                 onClick = {
-                    val intent = Intent(content, CheckHobby::class.java)
+                    val intent = Intent(content, MyHome::class.java)
                     content.startActivity(intent)
                 },
                 enabled = selectedGender.value != null,

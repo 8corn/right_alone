@@ -7,6 +7,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsFocusedAsState
 import androidx.compose.foundation.layout.Box
@@ -48,6 +49,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.right.R
+import com.example.right.widget.AnimatedProgressBar
 
 class JoinIdPw : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -63,6 +65,8 @@ class JoinIdPw : ComponentActivity() {
 @Composable
 fun JoinIdPwScreen() {
     val content = LocalContext.current
+    val activity = content as? ComponentActivity
+
     val (newId, setNewId) = remember { mutableStateOf("") }
     val (newPw, setNewPw) = remember { mutableStateOf("") }
     val (newCheckPw, setNewCheckPw) = remember { mutableStateOf("") }
@@ -104,6 +108,9 @@ fun JoinIdPwScreen() {
                 modifier = Modifier
                     .padding(start = 10.dp, top = 57.dp)
                     .size(size = 26.dp)
+                    .clickable {
+                        activity?.onBackPressedDispatcher?.onBackPressed()
+                    }
             )
             HorizontalDivider(
                 modifier = Modifier
@@ -112,14 +119,11 @@ fun JoinIdPwScreen() {
                 color = Color(0x4DCDCDCD),
                 thickness = 1.dp,
             )
-            HorizontalDivider(
-                modifier = Modifier
-                    .padding(vertical = 10.dp, horizontal = 16.dp),
-                color = Color(0x4DCDCDCD),
-                thickness = 5.dp,
-            )
+
+            AnimatedProgressBar(1)
+
             Text(
-                text = "가나다라마바사",
+                text = "반가워요!",
                 modifier = Modifier
                     .padding(start = 16.dp, top = 30.dp)
                     .align(Alignment.Start),
@@ -127,14 +131,16 @@ fun JoinIdPwScreen() {
                 color = Color.Black,
                 fontWeight = FontWeight.Bold,
             )
+
             Text(
-                text = "당신에 대해 알려주세요.\n꼭 맞는 이상형을 매칭해드릴게요.",
+                text = "간단한 정보로 가입 할 수 있어요.\n아이디와 비밀번호를 입력해주세요.",
                 modifier = Modifier
                     .padding(start = 16.dp, top = 15.dp)
                     .align(Alignment.Start),
                 fontSize = 15.sp,
                 color = Color.Black,
             )
+
             Text(
                 text = "아이디",
                 modifier = Modifier
@@ -263,9 +269,7 @@ fun JoinIdPwScreen() {
                             RoundedCornerShape(8.dp)
                         ),
                     singleLine = true,
-                    visualTransformation = if (isPwVisible.value) VisualTransformation.None else PasswordVisualTransformation(
-                        '\u2022'
-                    ),
+                    visualTransformation = if (isPwVisible.value) VisualTransformation.None else PasswordVisualTransformation('\u2022'),
                     trailingIcon = {
                         val icon =
                             if (isPwVisible.value) R.drawable.pw_eye_see else R.drawable.pw_eye_none
@@ -313,9 +317,7 @@ fun JoinIdPwScreen() {
                                 RoundedCornerShape(8.dp)
                             ),
                         singleLine = true,
-                        visualTransformation = if (isCheckPwVisible.value) VisualTransformation.None else PasswordVisualTransformation(
-                            '\u2022'
-                        ),
+                        visualTransformation = if (isCheckPwVisible.value) VisualTransformation.None else PasswordVisualTransformation('\u2022'),
                         trailingIcon = {
                             Row(
                                 verticalAlignment = Alignment.CenterVertically
@@ -348,6 +350,15 @@ fun JoinIdPwScreen() {
                         )
                     )
                 }
+
+                Text(
+                    text = "영어, 숫자, 특수문자 조합으로 입력해주세요.",
+                    color = Color(0xFFA2A2A2),
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Light,
+                    modifier = Modifier
+                        .padding(horizontal = 17.dp)
+                )
             }
 
             Spacer(modifier = Modifier.weight(1f))
@@ -355,7 +366,7 @@ fun JoinIdPwScreen() {
             Button(
                 enabled = isNextEnabled,
                 onClick = {
-                    val intent = Intent(content, CreateAka::class.java)
+                    val intent = Intent(content, SelfAuth::class.java)
                     content.startActivity(intent)
                 },
                 modifier = Modifier
