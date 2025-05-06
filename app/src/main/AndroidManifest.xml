@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <application
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true">
+        <activity
+            android:name=".other.MyFaceCheck"
+            android:exported="false"
+            android:label="@string/title_activity_my_face_check"
+            android:theme="@style/Theme.Right" />
+        <activity
+            android:name=".other.MyProfileChoice"
+            android:exported="true"
+            android:label="@string/title_activity_my_profile_choise"
+            android:theme="@style/Theme.Right" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".login_join.SelfAuth"
+            android:exported="false"
+            android:label="@string/title_activity_self_auth"
+            android:theme="@style/Theme.Right" />
+        <activity
+            android:name=".login_join.MyJob"
+            android:exported="false"
+            android:label="@string/title_activity_my_job"
+            android:theme="@style/Theme.Right" />
+        <activity
+            android:name=".login_join.MyHome"
+            android:exported="false"
+            android:label="@string/title_activity_my_home"
+            android:theme="@style/Theme.Right" />
+        <activity
+            android:name=".login_join.MyHeight"
+            android:exported="false"
+            android:label="@string/title_activity_my_height"
+            android:theme="@style/Theme.Right" />
+        <activity
+            android:name=".login_join.MyBody"
+            android:exported="false"
+            android:label="@string/title_activity_my_body"
+            android:theme="@style/Theme.Right" />
+        <activity
+            android:name=".login_join.Introduce"
+            android:exported="false"
+            android:label="@string/title_activity_introduce"
+            android:theme="@style/Theme.Right" />
+        <activity
+            android:name=".login_join.CheckHobby"
+            android:exported="false"
+            android:label="@string/title_activity_check_hobby"
+            android:theme="@style/Theme.Right" />
+        <activity
+            android:name=".login_join.ChoiceBirth"
+            android:exported="false"
+            android:label="@string/title_activity_choice_birth"
+            android:theme="@style/Theme.Right" />
+        <activity
+            android:name=".login_join.CreateAka"
+            android:exported="false"
+            android:label="@string/title_activity_create_aka"
+            android:theme="@style/Theme.Right" />
+        <activity
+            android:name=".login_join.JoinIdPw"
+            android:exported="true"
+            android:label="@string/title_activity_join_id_pw"
+            android:theme="@style/Theme.Right" />
+        <activity
+            android:name=".login_join.LoginPage"
+            android:exported="true"
+            android:theme="@style/Theme.Right"/>
+
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"
+            android:theme="@style/Theme.Right" />
+    </application>
+
+</manifest>

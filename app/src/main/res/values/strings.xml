@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">right</string>
+    <string name="less">bye</string>
+    <string name="more">Hi</string>
+    <string name="title_activity_login_page">LoginPage</string>
+    <string name="title_activity_join_id_pw">JoinIdPw</string>
+    <string name="title_activity_create_aka">CreateAka</string>
+    <string name="title_activity_choice_birth">ChoiceBirth</string>
+    <string name="title_activity_check_hobby">CheckHobby</string>
+    <string name="title_activity_introduce">Introduce</string>
+    <string name="title_activity_my_body">MyBody</string>
+    <string name="title_activity_my_height">MyHeight</string>
+    <string name="title_activity_my_home">MyHome</string>
+    <string name="title_activity_my_job">MyJob</string>
+    <string name="title_activity_self_auth">SelfAuth</string>
+    <string name="title_activity_my_profile_choise">MyProfileChoise</string>
+    <string name="title_activity_my_face_check">MyFaceCheck</string>
+</resources>
