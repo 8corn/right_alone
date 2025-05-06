@@ -8,13 +8,19 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBars
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBars
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -59,17 +65,22 @@ fun MainScreen() {
     val navController = rememberNavController()
 
     Scaffold(
+        modifier = Modifier.fillMaxSize(),
         bottomBar = { BottomNavigationBar(navController) }
     ) { innerPadding ->
-        NavHost(
-            navController = navController,
-            startDestination = "home",
-            modifier = Modifier.padding(innerPadding)
+        Box (
+            modifier = Modifier
+                .padding(innerPadding)
         ) {
-            composable("home") { HomeNavScreen() }
-            composable("chat") { ChatNavScreen() }
-            composable("like") { LikeNavScreen() }
-            composable("profile") { MyPageNavScreen() }
+            NavHost(
+                navController = navController,
+                startDestination = "like",
+            ) {
+                composable("home") { HomeNavScreen() }
+                composable("chat") { ChatNavScreen() }
+                composable("like") { LikeNavScreen() }
+                composable("profile") { MyPageNavScreen() }
+            }
         }
     }
 }

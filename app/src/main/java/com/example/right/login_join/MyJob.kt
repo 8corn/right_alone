@@ -85,7 +85,7 @@ fun MyJobScreen() {
                 thickness = 1.dp,
             )
 
-            AnimatedProgressBar(8)
+            AnimatedProgressBar(currentStep = 8)
 
             Text(
                 text = "어떤 일을 하시나요?",

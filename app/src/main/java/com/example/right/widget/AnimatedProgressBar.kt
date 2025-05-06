@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -17,12 +16,9 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun AnimatedProgressBar(
+    modifier: Modifier = Modifier,
     currentStep: Int,
     totalSteps: Int = 10,
-    modifier: Modifier = Modifier
-        .fillMaxWidth()
-        .height(5.dp)
-        .padding(horizontal = 16.dp)
 ) {
     val progressFraction = (currentStep.coerceIn(0, totalSteps)).toFloat() / totalSteps
 
@@ -34,6 +30,9 @@ fun AnimatedProgressBar(
 
     Box (
         modifier = modifier
+            .fillMaxWidth()
+            .height(5.dp)
+            .padding(horizontal = 16.dp)
             .background(Color(0x4DCDCDCD))
     ) {
         Box(

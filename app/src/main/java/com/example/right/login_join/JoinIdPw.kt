@@ -107,7 +107,7 @@ fun JoinIdPwScreen() {
                 contentDescription = "back",
                 modifier = Modifier
                     .padding(start = 10.dp, top = 57.dp)
-                    .size(size = 26.dp)
+                    .size(26.dp)
                     .clickable {
                         activity?.onBackPressedDispatcher?.onBackPressed()
                     }
@@ -120,7 +120,7 @@ fun JoinIdPwScreen() {
                 thickness = 1.dp,
             )
 
-            AnimatedProgressBar(1)
+            AnimatedProgressBar(currentStep = 1)
 
             Text(
                 text = "반가워요!",

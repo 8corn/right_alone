@@ -102,7 +102,7 @@ fun MyHeightScreen() {
                 thickness = 1.dp,
             )
 
-            AnimatedProgressBar(6)
+            AnimatedProgressBar(currentStep = 6)
 
             Text(
                 text = "키와 몸무게를 알려주세요.",

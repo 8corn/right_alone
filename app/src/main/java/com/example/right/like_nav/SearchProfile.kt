@@ -1,4 +1,4 @@
-package com.example.right.main_nav
+package com.example.right.like_nav
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.sp
 
 @Preview(showBackground = true)
 @Composable
-fun HomeNavScreen() {
+fun SearchProfileScreen() {
     Surface(
         color = Color.White,
         modifier = Modifier
@@ -29,7 +29,7 @@ fun HomeNavScreen() {
                     .padding(horizontal = 16.dp)
             ) {
                 Text(
-                    text = "홈 화면",
+                    text = "조회한 프로필",
                     fontSize = 22.sp,
                     fontWeight = FontWeight.Bold,
                     color = Color.Black,

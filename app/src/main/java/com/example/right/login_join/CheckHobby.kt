@@ -103,7 +103,7 @@ fun CheckHobbyScreen() {
                 thickness = 1.dp,
             )
 
-            AnimatedProgressBar(9)
+            AnimatedProgressBar(currentStep = 9)
 
             Text(
                 text = "관심사",

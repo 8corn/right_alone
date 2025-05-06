@@ -13,4 +13,6 @@
     <string name="title_activity_my_home">MyHome</string>
     <string name="title_activity_my_job">MyJob</string>
     <string name="title_activity_self_auth">SelfAuth</string>
+    <string name="title_activity_my_profile_choise">MyProfileChoise</string>
+    <string name="title_activity_my_face_check">MyFaceCheck</string>
 </resources>

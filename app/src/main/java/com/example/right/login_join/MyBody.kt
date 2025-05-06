@@ -81,7 +81,7 @@ fun MyBodyScreen() {
                 thickness = 1.dp,
             )
 
-            AnimatedProgressBar(7)
+            AnimatedProgressBar(currentStep = 7)
             
             Text(
                 text = "어떤 체형에 가까우신가요?",

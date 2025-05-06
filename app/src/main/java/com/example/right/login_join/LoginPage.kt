@@ -39,6 +39,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.right.MainActivity
+import com.example.right.MainScreen
 import com.example.right.R
 
 class LoginPage : ComponentActivity() {
@@ -76,7 +78,7 @@ fun LoginPageScreen() {
                 lineHeight = 32.sp,
                 textAlign = TextAlign.Center,
                 modifier = Modifier
-                    .padding(top = 148.dp)
+                    .padding(top = 164.dp)
             )
 
             Text(
@@ -141,7 +143,10 @@ fun LoginPageScreen() {
             Spacer(modifier = Modifier.height(22.dp))
 
             Button(
-                onClick = {},
+                onClick = {
+                    val intent = Intent(content, MainActivity::class.java)
+                    content.startActivity(intent)
+                },
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp)

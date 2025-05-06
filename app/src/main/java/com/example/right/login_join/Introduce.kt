@@ -103,7 +103,7 @@ fun IntroduceScreen() {
                 thickness = 1.dp,
             )
 
-            AnimatedProgressBar(10)
+            AnimatedProgressBar(currentStep = 10)
 
             Text(
                 text = "당신에 대해 소개해주세요",

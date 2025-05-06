@@ -8,8 +8,23 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.Right">
+        android:supportsRtl="true">
+        <activity
+            android:name=".other.MyFaceCheck"
+            android:exported="false"
+            android:label="@string/title_activity_my_face_check"
+            android:theme="@style/Theme.Right" />
+        <activity
+            android:name=".other.MyProfileChoice"
+            android:exported="true"
+            android:label="@string/title_activity_my_profile_choise"
+            android:theme="@style/Theme.Right" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".login_join.SelfAuth"
             android:exported="false"
@@ -63,13 +78,8 @@
         <activity
             android:name=".login_join.LoginPage"
             android:exported="true"
-            android:theme="@style/Theme.Right">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:theme="@style/Theme.Right"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="true"

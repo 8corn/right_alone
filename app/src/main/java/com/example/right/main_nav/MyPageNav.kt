@@ -22,7 +22,6 @@ fun MyPageNavScreen() {
         color = Color.White,
         modifier = Modifier
             .fillMaxSize()
-            .padding(bottom = 83.dp)
     ) {
         Column {
             Row(

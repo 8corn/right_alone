@@ -75,7 +75,7 @@ fun SelfAuthScreen() {
                 thickness = 1.dp,
             )
 
-            AnimatedProgressBar(2)
+            AnimatedProgressBar(currentStep = 2)
 
             Text(
                 text = "라잇 가입을 위해\n본인 인증이 필요해요.",

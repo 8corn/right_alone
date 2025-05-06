@@ -95,7 +95,7 @@ fun CreateAkaScreen() {
                 thickness = 1.dp,
             )
 
-            AnimatedProgressBar(3)
+            AnimatedProgressBar(currentStep = 3)
 
             Text(
                 text = "어떻게 불러드릴까요?",

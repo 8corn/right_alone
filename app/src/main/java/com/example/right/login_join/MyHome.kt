@@ -148,7 +148,7 @@ fun MyHomeScreen() {
                 thickness = 1.dp,
             )
 
-            AnimatedProgressBar(5)
+            AnimatedProgressBar(currentStep = 5)
 
             Text(
                 text = "어디에 거주하시나요?",
