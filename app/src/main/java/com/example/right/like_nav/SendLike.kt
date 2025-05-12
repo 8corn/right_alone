@@ -63,7 +63,7 @@ fun SendLikeScreen() {
     ) {
         Column(
             modifier = Modifier
-                .padding(top = 20.dp)
+                .padding(top = 20.dp, bottom = 80.dp)
         ) {
             Row(
                 modifier = Modifier

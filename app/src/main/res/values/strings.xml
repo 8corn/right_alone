@@ -15,4 +15,5 @@
     <string name="title_activity_self_auth">SelfAuth</string>
     <string name="title_activity_my_profile_choise">MyProfileChoise</string>
     <string name="title_activity_my_face_check">MyFaceCheck</string>
+    <string name="title_activity_filter_setting">FilterSetting</string>
 </resources>
