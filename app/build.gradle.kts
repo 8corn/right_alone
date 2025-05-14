@@ -45,6 +45,8 @@ dependencies {
     implementation(libs.camerax.lifecycle)
     implementation(libs.camerax.view)
     implementation(libs.lifecycle.runtime.compose)
+    implementation(libs.lottie.compose)
+    implementation(libs.foundation)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)

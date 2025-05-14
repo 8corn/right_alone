@@ -10,9 +10,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity
-            android:name=".other.FilterSetting"
-            android:exported="false"
-            android:label="@string/title_activity_filter_setting"
+            android:name=".profile.AnotherProfilePage"
+            android:exported="true"
+            android:label="@string/title_activity_another_profile_page"
             android:theme="@style/Theme.Right" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -20,6 +20,16 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".other.MatchingComplete"
+            android:exported="false"
+            android:label="@string/title_activity_matching_complete"
+            android:theme="@style/Theme.Right" />
+        <activity
+            android:name=".other.FilterSetting"
+            android:exported="true"
+            android:label="@string/title_activity_filter_setting"
+            android:theme="@style/Theme.Right" />
         <activity
             android:name=".other.MyFaceCheck"
             android:exported="true"
@@ -84,7 +94,6 @@
             android:name=".login_join.LoginPage"
             android:exported="true"
             android:theme="@style/Theme.Right" />
-
         <activity
             android:name=".MainActivity"
             android:exported="true"

@@ -58,6 +58,7 @@ fun MyProfileChoiceScreen() {
     val imageUris = remember { mutableStateListOf<Uri?>().apply { repeat(6) { add(null) } } }
 
     val context = LocalContext.current
+    val activity = context as? ComponentActivity
     val imagePickerLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri ->
@@ -94,7 +95,10 @@ fun MyProfileChoiceScreen() {
                         contentDescription = "back_arrow",
                         modifier = Modifier
                             .size(30.dp)
-                            .padding(top = 2.dp),
+                            .padding(top = 2.dp)
+                            .clickable {
+                                activity?.onBackPressedDispatcher?.onBackPressed()
+                            },
                     )
 
                     Text(

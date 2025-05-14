@@ -41,21 +41,6 @@ fun SendLikeScreen() {
     var selectedSort by remember { mutableStateOf("남은일") }
     var checked by remember { mutableStateOf(false) }
 
-    val personList = listOf(
-        Person(R.drawable.example1, "봄날의 햇살", 25, "부산", 80, 3),
-        Person(R.drawable.example2, "봄날의 햇살", 26, "부산", 70, 2),
-        Person(R.drawable.example2, "봄날의 햇살", 27, "부산", 60, 1),
-        Person(R.drawable.example1, "봄날의 햇살", 27, "부산", 60, 1),
-        Person(R.drawable.example1, "봄날의 햇살", 25, "부산", 80, 3),
-        Person(R.drawable.example2, "봄날의 햇살", 26, "부산", 70, 2),
-        Person(R.drawable.example2, "봄날의 햇살", 27, "부산", 60, 1),
-        Person(R.drawable.example1, "봄날의 햇살", 27, "부산", 60, 1),
-        Person(R.drawable.example1, "봄날의 햇살", 25, "부산", 80, 3),
-        Person(R.drawable.example2, "봄날의 햇살", 26, "부산", 70, 2),
-        Person(R.drawable.example2, "봄날의 햇살", 27, "부산", 60, 1),
-        Person(R.drawable.example1, "봄날의 햇살", 27, "부산", 60, 1),
-    )
-
     Surface(
         color = Color.White,
         modifier = Modifier
@@ -114,7 +99,7 @@ fun SendLikeScreen() {
             ) {
                 Column {
                     personList.chunked(2).forEach { rowItems ->
-                        Row(
+                        Row (
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(vertical = 8.dp),
@@ -137,3 +122,18 @@ fun SendLikeScreen() {
         }
     }
 }
+
+private val personList = listOf(
+    Person(R.drawable.example1, "봄날의 햇살", 25, "부산", 80, 3),
+    Person(R.drawable.example2, "봄날의 햇살", 26, "부산", 70, 2),
+    Person(R.drawable.example2, "봄날의 햇살", 27, "부산", 60, 1),
+    Person(R.drawable.example1, "봄날의 햇살", 27, "부산", 60, 1),
+    Person(R.drawable.example1, "봄날의 햇살", 25, "부산", 80, 3),
+    Person(R.drawable.example2, "봄날의 햇살", 26, "부산", 70, 2),
+    Person(R.drawable.example2, "봄날의 햇살", 27, "부산", 60, 1),
+    Person(R.drawable.example1, "봄날의 햇살", 27, "부산", 60, 1),
+    Person(R.drawable.example1, "봄날의 햇살", 25, "부산", 80, 3),
+    Person(R.drawable.example2, "봄날의 햇살", 26, "부산", 70, 2),
+    Person(R.drawable.example2, "봄날의 햇살", 27, "부산", 60, 1),
+    Person(R.drawable.example1, "봄날의 햇살", 27, "부산", 60, 1),
+)

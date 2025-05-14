@@ -212,9 +212,7 @@ fun CheckHobbyScreen() {
                     .padding(horizontal = 20.dp),
                 shape = RoundedCornerShape(30.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (selectedHobbies.isNotEmpty()) Color(0xFFFF717C) else Color(
-                        0xFFE8E8E8
-                    ),
+                    containerColor = if (selectedHobbies.isNotEmpty()) Color(0xFFFF717C) else Color(0xFFE8E8E8),
                     contentColor = Color.White,
                 ),
             ) {

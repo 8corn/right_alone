@@ -1,13 +1,14 @@
 package com.example.right.other
 
+import android.content.Intent
 import android.os.Bundle
-import android.widget.ToggleButton
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectDragGestures
 import androidx.compose.foundation.layout.Arrangement
@@ -16,6 +17,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.FlowRow
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -27,13 +29,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
-import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -55,6 +55,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.right.R
 import com.example.right.widget.PayArrow
+import com.example.right.widget.PayArrow2
 import kotlin.math.roundToInt
 
 class FilterSetting : ComponentActivity() {
@@ -68,13 +69,11 @@ class FilterSetting : ComponentActivity() {
 }
 
 @Preview(showBackground = true)
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FilterSettingScreen() {
     val content = LocalContext.current
     val activity = content as? ComponentActivity
 
-    var selectedOption by remember { mutableStateOf (listOf<String>()) }
     var toggleOn by remember { mutableStateOf(false) }
 
     val faceShapeOptions = listOf("계란형", "둥근형", "역삼각형", "긴 얼굴형", "각진형", "마름모형")
@@ -85,346 +84,408 @@ fun FilterSettingScreen() {
     val hairOptions = listOf("긴 생머리", "단발 머리", "웨이브 머리")
     val locationOptions = listOf("수도권", "경상도권", "충청권", "전라권", "강원권", "제주권")
 
-    Scaffold (
-        containerColor = Color.White,
+    var selectedFaceOption by remember { mutableStateOf <String?>(null) }
+    var selectedEyeOption by remember { mutableStateOf <String?>(null) }
+    var selectedEyeLineOption by remember { mutableStateOf <String?>(null) }
+    var selectedNoseOption by remember { mutableStateOf <String?>(null) }
+    var selectedLipsOption by remember { mutableStateOf <String?>(null) }
+    var selectedHairOption by remember { mutableStateOf <String?>(null) }
+    var selectedLocationOption by remember { mutableStateOf <String?>(null) }
+
+    Surface (
+        color = Color.White,
         modifier = Modifier
             .fillMaxSize(),
-        topBar = {
-            TopAppBar(
+    ){
+        Column {
+            Box(
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(94.dp)
                     .padding(top = 46.dp),
-                title = {
-                    Box (
+            ) {
+                Text(
+                    text = "필터 설정",
+                    color = Color.Black,
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    modifier = Modifier
+                        .align(Alignment.Center)
+                )
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp)
+                        .align(Alignment.Center)
+                        .padding(horizontal = 16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Image(
+                        painter = painterResource(R.drawable.back_arrow),
+                        contentDescription = "back_arrow",
                         modifier = Modifier
-                            .fillMaxWidth()
-                            .height(48.dp)
-                    ) {
-                        Image(
-                            painter = painterResource(R.drawable.back_arrow),
-                            contentDescription = "back_arrow",
-                            modifier = Modifier
-                                .align(Alignment.CenterStart)
-                                .size(30.dp)
-                                .clickable {
-                                    activity?.onBackPressedDispatcher?.onBackPressed()
-                                },
-                        )
+                            .size(30.dp)
+                            .clickable {
+                                activity?.onBackPressedDispatcher?.onBackPressed()
+                            },
+                    )
 
-                        Text(
-                            text = "필터 설정",
-                            color = Color.Black,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            modifier = Modifier
-                                .align(Alignment.Center)
-                                .offset(x = (-8).dp)
-                        )
-
-                        PayArrow(
-                            modifier = Modifier
-                                .align(Alignment.CenterEnd)
-                                .padding(vertical = 4.dp, horizontal = 16.dp),
-                            currentPay = 30
-                        )
-                    }
-                },
-                colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = Color.White
-                )
-            )
-        }
-    ) { innerPadding ->
-        Column (
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(innerPadding)
-                .padding(horizontal = 16.dp)
-                .verticalScroll(rememberScrollState())
-        ) {
-            Spacer(modifier = Modifier.height(36.dp))
-
-            Text(
-                text = "나이",
-                fontSize = 16.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = Color.Black,
-                modifier = Modifier
-                    .padding(horizontal = 8.dp)
-            )
-
-            Spacer(modifier = Modifier.height(36.dp))
-
-            AgeRangeSelector()
-
-            Spacer(modifier = Modifier.height(51.dp))
-
-            Row (
-                modifier = Modifier
-                    .padding(horizontal = 8.dp)
-            ) {
-                Text(
-                    text = "이상형",
-                    color = Color.Black,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                )
-
-                Spacer(modifier = Modifier.width(6.dp))
-
-                Icon(
-                    painter = painterResource(R.drawable.crown),
-                    contentDescription = "crown",
-                    modifier = Modifier
-                        .size(14.dp)
-                        .align(Alignment.CenterVertically),
-                    tint = Color(0xFFFF717C)
-                )
-
-                Spacer(modifier = Modifier.width(12.dp))
-
-                Image(
-                    painter = painterResource(R.drawable.pro_version_info),
-                    contentDescription = "pro_version_info",
-                    modifier = Modifier
-                        .size(height = 56.dp, width = 230.dp)
-                        .align(Alignment.CenterVertically),
-                )
-            }
-
-            Text(
-                text = "얼굴형",
-                color = Color(0xFF8E8E93),
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier
-                    .padding(horizontal = 8.dp)
-                    .padding(top = 1.dp)
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            FilterBtn(
-                filters = faceShapeOptions,
-                selectedFilters = selectedOption,
-                onToggleFilter = { filter ->
-                    selectedOption = if (filter in selectedOption) {
-                        selectedOption - filter
-                    } else {
-                        selectedOption + filter
-                    }
-                }
-            )
-
-            Spacer(modifier = Modifier.height(28.dp))
-
-            Text(
-                text = "눈",
-                color = Color(0xFF8E8E93),
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier
-                    .padding(horizontal = 8.dp)
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            FilterBtn(
-                filters = eyeOptions,
-                selectedFilters = selectedOption,
-                onToggleFilter = { filter ->
-                    selectedOption = if (filter in selectedOption) {
-                        selectedOption - filter
-                    } else {
-                        selectedOption + filter
-                    }
-                }
-            )
-
-            Spacer(modifier = Modifier.height(28.dp))
-
-            Text(
-                text = "쌍커풀",
-                color = Color(0xFF8E8E93),
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier
-                    .padding(horizontal = 8.dp)
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            FilterBtn(
-                filters = eyeLineOptions,
-                selectedFilters = selectedOption,
-                onToggleFilter = { filter ->
-                    selectedOption = if (filter in selectedOption) {
-                        selectedOption - filter
-                    } else {
-                        selectedOption + filter
-                    }
-                }
-            )
-
-            Spacer(modifier = Modifier.height(28.dp))
-
-            Text(
-                text = "코",
-                color = Color(0xFF8E8E93),
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier
-                    .padding(horizontal = 8.dp)
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            FilterBtn(
-                filters = noseOptions,
-                selectedFilters = selectedOption,
-                onToggleFilter = { filter ->
-                    selectedOption = if (filter in selectedOption) {
-                        selectedOption - filter
-                    } else {
-                        selectedOption + filter
-                    }
-                }
-            )
-
-            Spacer(modifier = Modifier.height(28.dp))
-
-            Text(
-                text = "입술",
-                color = Color(0xFF8E8E93),
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier
-                    .padding(horizontal = 8.dp)
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            FilterBtn(
-                filters = lipOptions,
-                selectedFilters = selectedOption,
-                onToggleFilter = { filter ->
-                    selectedOption = if (filter in selectedOption) {
-                        selectedOption - filter
-                    } else {
-                        selectedOption + filter
-                    }
-                }
-            )
-
-            Spacer(modifier = Modifier.height(28.dp))
-
-            Text(
-                text = "헤어",
-                color = Color(0xFF8E8E93),
-                fontSize = 12.sp,
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier
-                    .padding(horizontal = 8.dp)
-            )
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            FilterBtn(
-                filters = hairOptions,
-                selectedFilters = selectedOption,
-                onToggleFilter = { filter ->
-                    selectedOption = if (filter in selectedOption) {
-                        selectedOption - filter
-                    } else {
-                        selectedOption + filter
-                    }
-                }
-            )
-
-            Spacer(modifier = Modifier.height(56.dp))
-
-            Row (
-                modifier = Modifier
-                    .padding(horizontal = 8.dp)
-            ) {
-                Text(
-                    text = "지역",
-                    color = Color.Black,
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold,
-                    modifier = Modifier
-                        .align(Alignment.CenterVertically)
-                )
-
-                Spacer(modifier = Modifier.width(6.dp))
-
-                Icon(
-                    painter = painterResource(R.drawable.crown),
-                    contentDescription = "crown",
-                    modifier = Modifier
-                        .size(14.dp)
-                        .align(Alignment.CenterVertically),
-                    tint = Color(0xFFFF717C)
-                )
-            }
-
-            Spacer(modifier = Modifier.height(20.dp))
-
-            FilterBtn(
-                filters = locationOptions,
-                selectedFilters = selectedOption,
-                onToggleFilter = { filter ->
-                    selectedOption = if (filter in selectedOption) {
-                        selectedOption - filter
-                    } else {
-                        selectedOption + filter
-                    }
-                }
-            )
-
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                Column {
-                    Row {
-                        Text(
-                            text = "매력적인 사용자",
-                            color = Color.Black,
-                            fontSize = 16.sp,
-                            fontWeight = FontWeight.SemiBold,
-                            modifier = Modifier
-                        )
-
-                        Spacer(modifier = Modifier.width(6.dp))
-
-                        Icon(
-                            painter = painterResource(R.drawable.crown),
-                            contentDescription = "crown",
-                            tint = Color(0xFFFF717C),
-                            modifier = Modifier
-                                .size(14.dp),
-                        )
-                    }
-
-                    Spacer(modifier = Modifier.height(6.dp))
-
-                    Text(
-                        text = "매력적이라 평가받은 사용자만 매칭해요.",
-                        color = Color(0xFFC7C7CC),
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Medium
+                    PayArrow(
+                        modifier = Modifier
+                            .padding(vertical = 4.dp),
+                        currentPay = 30
                     )
                 }
-                Spacer(modifier = Modifier.weight(1f))
+            }
+            Column(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp)
+                    .padding(bottom = 42.dp)
+                    .verticalScroll(rememberScrollState())
+            ) {
+                Spacer(modifier = Modifier.height(36.dp))
 
-                ToggleSwitch(
-                    isChecked = toggleOn,
-                    onToggle = { toggleOn = !toggleOn }
+                Text(
+                    text = "나이",
+                    fontSize = 16.sp,
+                    fontWeight = FontWeight.SemiBold,
+                    color = Color.Black,
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
                 )
+
+                Spacer(modifier = Modifier.height(36.dp))
+
+                AgeRangeSelector()
+
+                Spacer(modifier = Modifier.height(51.dp))
+
+                Row(
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
+                ) {
+                    Text(
+                        text = "이상형",
+                        color = Color.Black,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                    )
+
+                    Spacer(modifier = Modifier.width(6.dp))
+
+                    Icon(
+                        painter = painterResource(R.drawable.crown),
+                        contentDescription = "crown",
+                        modifier = Modifier
+                            .size(14.dp)
+                            .align(Alignment.CenterVertically),
+                        tint = Color(0xFFFF717C)
+                    )
+
+                    Spacer(modifier = Modifier.width(12.dp))
+
+                    Image(
+                        painter = painterResource(R.drawable.pro_version_info),
+                        contentDescription = "pro_version_info",
+                        modifier = Modifier
+                            .size(height = 56.dp, width = 230.dp)
+                            .align(Alignment.CenterVertically),
+                    )
+                }
+
+                Text(
+                    text = "얼굴형",
+                    color = Color(0xFF8E8E93),
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
+                        .padding(top = 1.dp)
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                FilterBtn(
+                    filters = faceShapeOptions,
+                    selectedFilters = listOfNotNull(selectedFaceOption),
+                    onToggleFilter = { filter ->
+                        selectedFaceOption = if (selectedFaceOption == filter) null else filter
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(28.dp))
+
+                Text(
+                    text = "눈",
+                    color = Color(0xFF8E8E93),
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                FilterBtn(
+                    filters = eyeOptions,
+                    selectedFilters = listOfNotNull(selectedEyeOption),
+                    onToggleFilter = { filter ->
+                        selectedEyeOption = if (selectedEyeOption == filter) null else filter
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(28.dp))
+
+                Text(
+                    text = "쌍커풀",
+                    color = Color(0xFF8E8E93),
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                FilterBtn(
+                    filters = eyeLineOptions,
+                    selectedFilters = listOfNotNull(selectedEyeLineOption),
+                    onToggleFilter = { filter ->
+                        selectedEyeLineOption = if (selectedEyeLineOption == filter) null else filter
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(28.dp))
+
+                Text(
+                    text = "코",
+                    color = Color(0xFF8E8E93),
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                FilterBtn(
+                    filters = noseOptions,
+                    selectedFilters = listOfNotNull(selectedNoseOption),
+                    onToggleFilter = { filter ->
+                        selectedNoseOption = if (selectedNoseOption == filter) null else filter
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(28.dp))
+
+                Text(
+                    text = "입술",
+                    color = Color(0xFF8E8E93),
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                FilterBtn(
+                    filters = lipOptions,
+                    selectedFilters = listOfNotNull(selectedLipsOption),
+                    onToggleFilter = { filter ->
+                        selectedLipsOption = if (selectedLipsOption == filter) null else filter
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(28.dp))
+
+                Text(
+                    text = "헤어",
+                    color = Color(0xFF8E8E93),
+                    fontSize = 12.sp,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
+                )
+
+                Spacer(modifier = Modifier.height(12.dp))
+
+                FilterBtn(
+                    filters = hairOptions,
+                    selectedFilters = listOfNotNull(selectedHairOption),
+                    onToggleFilter = { filter ->
+                        selectedHairOption = if (selectedHairOption == filter) null else filter
+                    }
+                )
+
+                Spacer(modifier = Modifier.height(56.dp))
+
+                Row(
+                    modifier = Modifier
+                        .padding(horizontal = 8.dp)
+                ) {
+                    Text(
+                        text = "지역",
+                        color = Color.Black,
+                        fontSize = 16.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                    )
+
+                    Spacer(modifier = Modifier.width(6.dp))
+
+                    Icon(
+                        painter = painterResource(R.drawable.crown),
+                        contentDescription = "crown",
+                        modifier = Modifier
+                            .size(14.dp)
+                            .align(Alignment.CenterVertically),
+                        tint = Color(0xFFFF717C)
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                FilterBtn(
+                    filters = locationOptions,
+                    selectedFilters = listOfNotNull(selectedLocationOption),
+                    onToggleFilter = { filter ->
+                        selectedLocationOption = if (selectedLocationOption == filter) null else filter
+                    }
+                )
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    Column {
+                        Row {
+                            Text(
+                                text = "매력적인 사용자",
+                                color = Color.Black,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                modifier = Modifier
+                            )
+
+                            Spacer(modifier = Modifier.width(6.dp))
+
+                            Icon(
+                                painter = painterResource(R.drawable.crown),
+                                contentDescription = "crown",
+                                tint = Color(0xFFFF717C),
+                                modifier = Modifier
+                                    .size(14.dp)
+                                    .align(Alignment.CenterVertically),
+                            )
+                        }
+
+                        Text(
+                            text = "매력적이라 평가받은 사용자만 매칭해요.",
+                            color = Color(0xFFC7C7CC),
+                            fontSize = 14.sp,
+                            fontWeight = FontWeight.Medium
+                        )
+                    }
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.CenterVertically)
+                    ) {
+                        ToggleSwitch(
+                            isChecked = toggleOn,
+                            onToggle = { toggleOn = !toggleOn }
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(88.dp))
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp)
+                ) {
+                    Button(
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = Color.White,
+                            contentColor = Color.White
+                        ),
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .border(1.dp, Color.Black, RoundedCornerShape(16.dp))
+                            .width(120.dp),
+                        onClick = { },
+                    ) {
+                        Row {
+                            Icon(
+                                painter = painterResource(R.drawable.refresh_icon),
+                                contentDescription = "refresh_icon",
+                                tint = Color.Black,
+                                modifier = Modifier
+                                    .align(Alignment.CenterVertically)
+                            )
+
+                            Spacer(modifier = Modifier.width(8.dp))
+
+                            Text(
+                                text = "초기화",
+                                color = Color.Black,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                modifier = Modifier
+                                    .align(Alignment.CenterVertically)
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.width(13.dp))
+
+                    Button(
+                        enabled = !selectedLocationOption.isNullOrEmpty(),
+                        colors = ButtonDefaults.buttonColors(
+                            containerColor = if (!selectedLocationOption.isNullOrEmpty()) Color(
+                                0xFFFF717C
+                            )
+                            else Color(0xFFE8E8E8),
+                            contentColor = Color.White
+                        ),
+                        modifier = Modifier
+                            .fillMaxHeight()
+                            .weight(1f),
+                        shape = RoundedCornerShape(16.dp),
+                        onClick = {
+                            val intent = Intent(content, MatchingComplete::class.java)
+                            content.startActivity(intent)
+                        },
+                    ) {
+                        Row {
+                            PayArrow2(
+                                currentPay = 30,
+                                isEnabled = !selectedLocationOption.isNullOrEmpty(),
+                                modifier = Modifier,
+                            )
+
+                            Spacer(modifier = Modifier.width(12.dp))
+
+                            Text(
+                                text = "필터 적용",
+                                color = Color.White,
+                                fontSize = 16.sp,
+                                fontWeight = FontWeight.SemiBold,
+                                modifier = Modifier
+                                    .align(Alignment.CenterVertically)
+                            )
+                        }
+                    }
+                }
             }
         }
     }

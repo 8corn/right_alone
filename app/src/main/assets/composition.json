@@ -1,0 +1,150 @@
+{
+  "headers": {
+    "contentType": "application/x-lottielab-figma-plugin",
+    "version": 1,
+    "userId": "1398517170311856735",
+    "uuid": "1f8eace8-c614-47c2-aafd-f7c29aa9c015"
+  },
+  "data": [
+    {
+      "absoluteBoundingBox": {
+        "x": 5029,
+        "y": 18899,
+        "width": 298,
+        "height": 314
+      },
+      "absoluteRenderBounds": {
+        "x": 5029,
+        "y": 18899,
+        "width": 298,
+        "height": 314
+      },
+      "absoluteTransform": [
+        [
+          1,
+          0,
+          5029
+        ],
+        [
+          0,
+          1,
+          18899
+        ]
+      ],
+      "blendMode": "PASS_THROUGH",
+      "bottomLeftRadius": 0,
+      "bottomRightRadius": 0,
+      "constrainProportions": false,
+      "constraints": {
+        "horizontal": "SCALE",
+        "vertical": "SCALE"
+      },
+      "cornerRadius": 0,
+      "cornerSmoothing": 0,
+      "dashPattern": [],
+      "effects": [],
+      "exportSettings": [
+        {
+          "format": "SVG",
+          "suffix": "",
+          "contentsOnly": true,
+          "colorProfile": "DOCUMENT",
+          "svgOutlineText": true,
+          "svgIdAttribute": false,
+          "svgSimplifyStroke": true
+        }
+      ],
+      "fillGeometry": [
+        {
+          "windingRule": "NONZERO",
+          "data": "M0 0 L298 0 L298 314 L0 314 L0 0 Z"
+        }
+      ],
+      "fills": [
+        {
+          "type": "VIDEO",
+          "visible": true,
+          "opacity": 1,
+          "blendMode": "NORMAL",
+          "scaleMode": "CROP",
+          "imageTransform": [
+            [
+              0.9992110729217529,
+              0,
+              0.0003944773052353412
+            ],
+            [
+              0,
+              0.9289941191673279,
+              0.0710059180855751
+            ]
+          ],
+          "scalingFactor": 0.5,
+          "filters": {
+            "exposure": 0,
+            "contrast": 0,
+            "saturation": 0,
+            "temperature": 0,
+            "tint": 0,
+            "highlights": 0,
+            "shadows": 0
+          },
+          "videoTransform": [
+            [
+              0.9992110729217529,
+              0,
+              0.0003944773052353412
+            ],
+            [
+              0,
+              0.9289941191673279,
+              0.0710059180855751
+            ]
+          ],
+          "videoHash": "d4a2c1eb11ecbe59ea6a13888566bd468dd2bf7c"
+        }
+      ],
+      "height": 314,
+      "id": "1039:1053",
+      "isMask": false,
+      "layoutAlign": "INHERIT",
+      "layoutGrow": 0,
+      "layoutPositioning": "AUTO",
+      "locked": false,
+      "name": "컴포지션 1_1 2",
+      "opacity": 1,
+      "relativeTransform": [
+        [
+          1,
+          0,
+          0
+        ],
+        [
+          0,
+          1,
+          24
+        ]
+      ],
+      "rotation": 0,
+      "strokeAlign": "INSIDE",
+      "strokeCap": "NONE",
+      "strokeGeometry": [],
+      "strokeJoin": "MITER",
+      "strokeMiterLimit": 4,
+      "strokeWeight": 1,
+      "strokeTopWeight": 1,
+      "strokeBottomWeight": 1,
+      "strokeLeftWeight": 1,
+      "strokeRightWeight": 1,
+      "strokes": [],
+      "topLeftRadius": 0,
+      "topRightRadius": 0,
+      "type": "RECTANGLE",
+      "visible": true,
+      "width": 298,
+      "x": 0,
+      "y": 24
+    }
+  ],
+  "assets": []
+}

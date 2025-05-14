@@ -16,4 +16,6 @@
     <string name="title_activity_my_profile_choise">MyProfileChoise</string>
     <string name="title_activity_my_face_check">MyFaceCheck</string>
     <string name="title_activity_filter_setting">FilterSetting</string>
+    <string name="title_activity_matching_complete">MatchingComplete</string>
+    <string name="title_activity_another_profile_page">AnotherProfilePage</string>
 </resources>
