@@ -18,4 +18,5 @@
     <string name="title_activity_filter_setting">FilterSetting</string>
     <string name="title_activity_matching_complete">MatchingComplete</string>
     <string name="title_activity_another_profile_page">AnotherProfilePage</string>
+    <string name="title_activity_edit_profile">EditProfile</string>
 </resources>

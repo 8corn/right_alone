@@ -10,10 +10,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity
+            android:name=".mypage.EditProfile"
+            android:exported="false"
+            android:label="@string/title_activity_edit_profile"
+            android:theme="@style/Theme.Right" />
+        <activity
             android:name=".profile.AnotherProfilePage"
             android:exported="true"
             android:label="@string/title_activity_another_profile_page"
-            android:theme="@style/Theme.Right" >
+            android:theme="@style/Theme.Right">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

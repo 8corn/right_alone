@@ -65,7 +65,7 @@ fun MainScreen() {
             composable("home") { HomeNavScreen() }
             composable("chat") { ChatNavScreen() }
             composable("like") { LikeNavScreen() }
-            composable("profile") { MyPageNavScreen() }
+            composable("myPage") { MyPageNavScreen() }
         }
     }
 }
@@ -76,7 +76,7 @@ fun BottomNavigationBar(navController: NavController) {
         NavigationItem("home", R.drawable.nav_home, "홈"),
         NavigationItem("chat", R.drawable.nav_chat, "채팅"),
         NavigationItem("like", R.drawable.nav_like, "좋아요"),
-        NavigationItem("profile", R.drawable.nav_profile, "마이페이지"),
+        NavigationItem("myPage", R.drawable.nav_profile, "마이페이지"),
     )
 
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
