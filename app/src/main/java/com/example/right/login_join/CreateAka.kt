@@ -1,5 +1,6 @@
 package com.example.right.login_join
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -64,6 +65,9 @@ fun CreateAkaScreen() {
     val isAkaValid = aka.isNotBlank()
     val akaInteractionSource = remember { MutableInteractionSource() }
     val isAkaFocused by akaInteractionSource.collectIsFocusedAsState()
+
+    val prefs = content.getSharedPreferences("profile", Context.MODE_PRIVATE)
+    prefs.edit().putString("aka", aka).apply()
 
     val highlightColor = Color(0xFFFF717C)
     val defaultBorderColor = Color.Black

@@ -4,10 +4,14 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.animation.core.animateFloatAsState
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.gestures.Orientation
+import androidx.compose.foundation.gestures.draggable
+import androidx.compose.foundation.gestures.rememberDraggableState
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -16,20 +20,22 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -39,8 +45,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import com.example.right.R
 
 class AnotherProfilePage : ComponentActivity() {
@@ -56,11 +64,29 @@ class AnotherProfilePage : ComponentActivity() {
 @Preview(showBackground = true)
 @Composable
 fun AnotherProfilePageScreen() {
+    val context = LocalContext.current
+    val activity = context as? ComponentActivity
+
     val pagerState = rememberPagerState(pageCount = { 4 })
+
+    val screenHeightPx = LocalContext.current.resources.displayMetrics.heightPixels.toFloat()
+    val collapsedOffset = screenHeightPx * 0.85f
+    val expandedOffset = 0f
+    val offsetY = remember { mutableFloatStateOf(collapsedOffset) }
+    
+    val dragState = rememberDraggableState { delta ->
+        val newOffset = (offsetY.floatValue + delta).coerceIn(expandedOffset, collapsedOffset)
+        offsetY.floatValue = newOffset
+    }
+
+    val progress = if (collapsedOffset == expandedOffset) 0f
+                        else (( collapsedOffset - offsetY.floatValue) / (collapsedOffset - expandedOffset)).coerceIn(0f, 1f)
+    val animatedOffset by animateFloatAsState(targetValue = offsetY.floatValue, label = "PanelOffset")
 
     Box(
         modifier = Modifier
             .fillMaxSize()
+            .zIndex(0f)
     ) {
         Image(
             painter = painterResource(R.drawable.example1),
@@ -84,36 +110,74 @@ fun AnotherProfilePageScreen() {
                 .fillMaxSize()
         ) { page ->
             when (page) {
-                0 -> PageContent()
+                0 -> {}
                 1 -> PageContent1()
                 2 -> PageContent2()
                 3 -> PageContent3()
             }
         }
+
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Black.copy(alpha = 0.6f * progress))
+                .zIndex(1f)
+        )
+
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(horizontal = 16.dp)
+                .zIndex(3f)
         ) {
             Column {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(vertical = 70.dp),
-                    horizontalArrangement = Arrangement.Center,
-                ) {
-                    repeat(4) { index ->
-                        val selected = pagerState.currentPage == index
-                        Box(
+                Box {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 50.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.SpaceBetween
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.back_circle_btn),
+                            contentDescription = "back",
+                            tint = Color.White,
                             modifier = Modifier
-                                .padding(horizontal = 4.dp)
-                                .width(if (selected) 20.dp else 5.dp)
-                                .height(4.dp)
-                                .background(
-                                    color = if (selected) Color.White else Color(0xB2717171),
-                                    shape = RoundedCornerShape(4.dp)
-                                )
+                                .size(40.dp)
+                                .clickable {
+                                    activity?.onBackPressedDispatcher?.onBackPressed()
+                                },
                         )
+
+                        Icon(
+                            painter = painterResource(R.drawable.menu_circle_btn),
+                            contentDescription = "menu",
+                            tint = Color.White,
+                            modifier = Modifier
+                                .size(40.dp),
+                        )
+                    }
+
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(vertical = 70.dp),
+                        horizontalArrangement = Arrangement.Center,
+                    ) {
+                        repeat(4) { index ->
+                            val selected = pagerState.currentPage == index
+                            Box(
+                                modifier = Modifier
+                                    .padding(horizontal = 4.dp)
+                                    .width(if (selected) 20.dp else 5.dp)
+                                    .height(4.dp)
+                                    .background(
+                                        color = if (selected) Color.White else Color(0xB2717171),
+                                        shape = RoundedCornerShape(4.dp)
+                                    )
+                            )
+                        }
                     }
                 }
 
@@ -167,155 +231,112 @@ fun AnotherProfilePageScreen() {
                 }
             }
         }
-    }
-}
 
-@Composable
-fun PageContent() {
-    val context = LocalContext.current
-    val activity = context as? ComponentActivity
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(bottom = 110.dp)
-            .padding(horizontal = 16.dp)
-    ) {
-        Row(
+        Column(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(top = 50.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
+                .offset {
+                    IntOffset(x = 0, y = animatedOffset.toInt())
+                }
+                .draggable(
+                    orientation = Orientation.Vertical,
+                    state = dragState,
+                    onDragStopped = {
+                        if (progress > 0.4f) {
+                            offsetY.floatValue = expandedOffset
+                        } else {
+                            offsetY.floatValue = collapsedOffset
+                        }
+                    }
+                )
+                .clickable {
+                    offsetY.floatValue = expandedOffset
+                }
+                .background(Color.Black.copy(alpha = 0.6f * progress))
+                .padding(16.dp)
+                .zIndex(2f)
         ) {
-            Icon(
-                painter = painterResource(R.drawable.back_circle_btn),
-                contentDescription = "back",
-                tint = Color.White,
+            Column(
                 modifier = Modifier
-                    .size(40.dp)
-                    .clickable {
-                        activity?.onBackPressedDispatcher?.onBackPressed()
-                    },
-            )
-
-            Icon(
-                painter = painterResource(R.drawable.menu_circle_btn),
-                contentDescription = "menu",
-                tint = Color.White,
-                modifier = Modifier
-                    .size(40.dp),
-            )
-        }
-
-        Spacer(modifier = Modifier.weight(1f))
-
-        Column {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .padding(horizontal = 2.dp)
+                    .fillMaxSize()
+                    .padding(horizontal = 16.dp, vertical = 110.dp)
             ) {
-                Text(
-                    text = "봄날의 햇살",
-                    fontSize = 30.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
+                Column {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .padding(horizontal = 2.dp)
+                    ) {
+                        Text(
+                            text = "봄날의 햇살",
+                            fontSize = 30.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = Color.White
+                        )
 
-                Text(
-                    text = "24",
-                    fontSize = 30.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color.White
-                )
+                        Text(
+                            text = "24",
+                            fontSize = 30.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = Color.White
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(11.dp))
+
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        modifier = Modifier
+                            .padding(horizontal = 6.dp)
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.location_icon),
+                            contentDescription = "location_icon",
+                            tint = Color.White,
+                            modifier = Modifier
+                                .size(height = 16.dp, width = 13.4.dp)
+                        )
+
+                        Spacer(modifier = Modifier.width(7.6.dp))
+
+                        Text(
+                            text = "부산시 수영구",
+                            fontSize = 15.sp,
+                            fontWeight = FontWeight.Medium,
+                            color = Color.White,
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Character("163cm")
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    Text(
+                        text = "ai 외모 분석",
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.White,
+                        modifier = Modifier
+                            .padding(horizontal = 6.dp)
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Character("큰 눈")
+                }
+
+
+                Spacer(modifier = Modifier.weight(1f))
             }
-
-            Spacer(modifier = Modifier.height(11.dp))
-
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .padding(horizontal = 6.dp)
-            ) {
-                Icon(
-                    painter = painterResource(R.drawable.location_icon),
-                    contentDescription = "location_icon",
-                    tint = Color.White,
-                    modifier = Modifier
-                        .size(height = 16.dp, width = 13.4.dp)
-                )
-
-                Spacer(modifier = Modifier.width(7.6.dp))
-
-                Text(
-                    text = "부산시 수영구",
-                    fontSize = 15.sp,
-                    fontWeight = FontWeight.Medium,
-                    color = Color.White,
-                )
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Character("163cm")
-
-            Spacer(modifier = Modifier.height(10.dp))
-
-            Text(
-                text = "ai 외모 분석",
-                fontSize = 12.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = Color.White,
-                modifier = Modifier
-                    .padding(horizontal = 6.dp)
-            )
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Character("큰 눈")
         }
     }
 }
 
 @Composable
 fun PageContent1() {
-    val context = LocalContext.current
-    val activity = context as? ComponentActivity
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(bottom = 110.dp)
-            .padding(horizontal = 16.dp)
-    ) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 50.dp),
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Icon(
-                painter = painterResource(R.drawable.back_circle_btn),
-                contentDescription = "back",
-                tint = Color.White,
-                modifier = Modifier
-                    .size(40.dp)
-                    .clickable {
-                        activity?.onBackPressedDispatcher?.onBackPressed()
-                    },
-            )
 
-            Icon(
-                painter = painterResource(R.drawable.menu_circle_btn),
-                contentDescription = "menu",
-                tint = Color.White,
-                modifier = Modifier
-                    .size(40.dp),
-            )
-        }
-
-        Spacer(modifier = Modifier.weight(1f))
-    }
 }
 
 @Composable
@@ -336,17 +357,21 @@ fun Character(
         modifier = Modifier
             .background(color = Color(0x1FFFFFFF), shape = RoundedCornerShape(16.dp))
             .border(0.3.dp, Color(0x33FFFFFF), shape = RoundedCornerShape(16.dp))
-            .padding(horizontal = 4.dp, vertical = 4.dp),
-        color = Color.Transparent
+            .height(26.dp)
+            .padding(horizontal = 4.dp),
+        color = Color.Transparent,
     ) {
-        Text(
-            text = text,
-            fontSize = 14.sp,
-            fontWeight = FontWeight.Light,
-            color = Color.White,
-            modifier = Modifier
-                .padding(vertical = 4.dp, horizontal = 7.dp),
-            textAlign = TextAlign.Center,
-        )
+        Box{
+            Text(
+                text = text,
+                fontSize = 14.sp,
+                fontWeight = FontWeight.Light,
+                color = Color.White,
+                modifier = Modifier
+                    .padding(horizontal = 7.dp)
+                    .align(Alignment.Center),
+                textAlign = TextAlign.Center,
+            )
+        }
     }
 }
