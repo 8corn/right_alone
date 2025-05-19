@@ -40,7 +40,7 @@ import androidx.compose.ui.unit.sp
 import com.example.right.R
 import com.example.right.widget.AnimatedProgressBar
 
-class SelfAuth : ComponentActivity() {
+class SelfAuthCheck : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -52,14 +52,14 @@ class SelfAuth : ComponentActivity() {
 
 @Preview(showBackground = true)
 @Composable
-fun SelfAuthScreen() {
+fun SelfAuthCheckScreen() {
     val content =  LocalContext.current
     val activity = content as? ComponentActivity
 
-    val (numberAuth, setNumberAuth) = remember { mutableStateOf("") }
+    val (numberAuthCheck, setNumberAuthCheck) = remember { mutableStateOf("") }
 
     val prefs = content.getSharedPreferences("profile", Context.MODE_PRIVATE)
-    prefs.edit().putString("numberAuth", numberAuth).apply()
+    prefs.edit().putString("numberAuthCheck", numberAuthCheck).apply()
 
     Surface (
         color = Color.White
@@ -90,7 +90,7 @@ fun SelfAuthScreen() {
             AnimatedProgressBar(currentStep = 2)
 
             Text(
-                text = "라잇 가입을 위해\n본인 인증이 필요해요.",
+                text = "문자로 전송된\n인증번호를 입력해주세요.",
                 modifier = Modifier
                     .padding(start = 16.dp, top = 30.dp)
                     .align(Alignment.Start),
@@ -99,7 +99,7 @@ fun SelfAuthScreen() {
                 fontWeight = FontWeight.Bold,
             )
             Text(
-                text = "본인 인증을 위해 전화번호를 인증해주세요.",
+                text = "인증번호 6자리를 입력해주세요.",
                 modifier = Modifier
                     .padding(start = 16.dp, top = 15.dp)
                     .align(Alignment.Start),
@@ -110,7 +110,7 @@ fun SelfAuthScreen() {
             Spacer(modifier = Modifier.height(56.dp))
 
             Text(
-                text = "휴대폰 번호",
+                text = "인증번호",
                 fontSize = 15.sp,
                 color = Color(0xFF121212),
                 modifier = Modifier
@@ -120,15 +120,19 @@ fun SelfAuthScreen() {
             Spacer(modifier = Modifier.height(4.dp))
 
             TextField(
-                value = numberAuth,
-                onValueChange = setNumberAuth,
+                value = numberAuthCheck,
+                onValueChange = setNumberAuthCheck,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 16.dp)
-                    .border(1.dp, Color(0xFFCDCDCD), RoundedCornerShape(8.dp)),
+                    .border(
+                        1.dp,
+                        Color(0xFFCDCDCD),
+                        RoundedCornerShape(8.dp)
+                    ),
                 placeholder = {
                     Text(
-                        text = "휴대폰 인증하기",
+                        text = "6자리 숫자를 입력해주세요.",
                         fontSize = 16.sp,
                         color = Color(0xFFA2A2A2),
                         fontWeight = FontWeight.Medium
@@ -147,7 +151,7 @@ fun SelfAuthScreen() {
             Spacer(modifier = Modifier.weight(1f))
 
             Button(
-                enabled = numberAuth.isNotBlank(),
+                enabled = numberAuthCheck.isNotBlank(),
                 onClick = {
                     val intent = Intent(content, SelfAuthCheck::class.java)
                     content.startActivity(intent)
@@ -158,12 +162,12 @@ fun SelfAuthScreen() {
                     .padding(horizontal = 20.dp),
                 shape = RoundedCornerShape(30.dp),
                 colors = ButtonDefaults.buttonColors(
-                    containerColor = if (numberAuth.isNotBlank()) Color(0xFFFF717C) else Color(0xFFE8E8E8),
+                    containerColor = if (numberAuthCheck.isNotBlank()) Color(0xFFFF717C) else Color(0xFFE8E8E8),
                     contentColor = Color.White,
                 ),
             ) {
                 Text(
-                    text = "다음",
+                    text = "인증하기",
                     color = Color.White,
                     fontSize = 18.sp,
                     fontWeight = FontWeight.SemiBold,

@@ -10,6 +10,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true">
         <activity
+            android:name=".login_join.SelfAuthCheck"
+            android:exported="false"
+            android:label="@string/title_activity_self_auth_check"
+            android:theme="@style/Theme.Right" />
+        <activity
             android:name=".mypage.EditProfile"
             android:exported="false"
             android:label="@string/title_activity_edit_profile"

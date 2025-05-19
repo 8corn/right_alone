@@ -76,11 +76,15 @@ fun EditProfileScreen() {
         }
     }
 
-    val prefs = context.getSharedPreferences("profile", Context.MODE_PRIVATE)
-    val (nickname, setNickname) = remember { mutableStateOf(prefs.getString("aka", "") ?: "") }
+    val prefsNickname = context.getSharedPreferences("profile", Context.MODE_PRIVATE)
+    val (nickname, setNickname) = remember { mutableStateOf(prefsNickname.getString("aka", "") ?: "") }
+
+    val prefsNumber = context.getSharedPreferences("profile", Context.MODE_PRIVATE)
+    val (number, setNumber) = remember { mutableStateOf(prefsNumber.getString("aka", "") ?: "") }
 
     LaunchedEffect(nickname) {
-        prefs.edit().putString("aka", nickname).apply()
+        prefsNickname.edit().putString("aka", nickname).apply()
+        prefsNumber.edit().putString("number", number).apply()
     }
 
     Surface(
@@ -179,7 +183,7 @@ fun EditProfileScreen() {
                             }
                         }
 
-                        Spacer(modifier = Modifier.width(10.dp))
+                        Spacer(modifier = Modifier.width(6.dp))
 
                         Column(
                             verticalArrangement = Arrangement.SpaceBetween,
@@ -260,6 +264,20 @@ fun EditProfileScreen() {
                         focusedIndicatorColor = Color.Transparent,
                         unfocusedIndicatorColor = Color.Transparent,
                     )
+                )
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                Text(
+                    text = "전화번호",
+                    fontSize = 14.sp,
+                    color = Color(0xFF949BA8),
+                )
+
+                TextField(
+                    value = number,
+                    onValueChange = { setNumber(it) },
+                    
                 )
             }
         }

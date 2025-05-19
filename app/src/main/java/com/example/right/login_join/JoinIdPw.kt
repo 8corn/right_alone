@@ -82,7 +82,6 @@ fun JoinIdPwScreen() {
     val isNextEnabled = isIdValid && isPwValid && isCheckPwValid && isPwSame
 
     val highlightColor = Color(0xFFFF717C)
-    val defaultBorderColor = Color.Black
     val inactiveButtonColor = Color(0xFFE8E8E8)
 
     val idInteractionSource = remember { MutableInteractionSource() }
@@ -183,11 +182,7 @@ fun JoinIdPwScreen() {
                         .height(56.dp)
                         .border(
                             1.dp,
-                            when {
-                                isIdFocused -> highlightColor
-                                isIdValid -> defaultBorderColor
-                                else -> inactiveButtonColor
-                            },
+                            if (isIdFocused) highlightColor else inactiveButtonColor,
                             RoundedCornerShape(8.dp)
                         ),
                     textStyle = TextStyle(fontSize = 20.sp),
@@ -261,11 +256,7 @@ fun JoinIdPwScreen() {
                         .height(56.dp)
                         .border(
                             1.dp,
-                            when {
-                                isPwFocused -> highlightColor
-                                isPwValid -> defaultBorderColor
-                                else -> inactiveButtonColor
-                            },
+                            if (isPwFocused) highlightColor else inactiveButtonColor,
                             RoundedCornerShape(8.dp)
                         ),
                     singleLine = true,
@@ -309,11 +300,7 @@ fun JoinIdPwScreen() {
                             .height(56.dp)
                             .border(
                                 1.dp,
-                                when {
-                                    isCheckPwFocused -> highlightColor
-                                    isCheckPwValid -> defaultBorderColor
-                                    else -> inactiveButtonColor
-                                },
+                                if (isCheckPwFocused) highlightColor else inactiveButtonColor,
                                 RoundedCornerShape(8.dp)
                             ),
                         singleLine = true,

@@ -71,7 +71,7 @@ fun AnotherProfilePageScreen() {
 
     val screenHeightPx = LocalContext.current.resources.displayMetrics.heightPixels.toFloat()
     val collapsedOffset = screenHeightPx * 0.85f
-    val expandedOffset = 0f
+    val expandedOffset = 0.3f
     val offsetY = remember { mutableFloatStateOf(collapsedOffset) }
     
     val dragState = rememberDraggableState { delta ->
