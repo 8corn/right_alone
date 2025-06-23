@@ -42,6 +42,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.edit
 import com.example.right.R
 import com.example.right.widget.AnimatedProgressBar
 
@@ -67,7 +68,7 @@ fun CreateAkaScreen() {
     val isAkaFocused by akaInteractionSource.collectIsFocusedAsState()
 
     val prefs = content.getSharedPreferences("profile", Context.MODE_PRIVATE)
-    prefs.edit().putString("aka", aka).apply()
+    prefs.edit { putString("aka", aka) }
 
     val highlightColor = Color(0xFFFF717C)
     val defaultBorderColor = Color.Black
